@@ -1,46 +1,49 @@
 from tkinter import *
-import re
+import tkinter as tk
+import os
+import re #(Regular expression)
 
 class Calculator:
-    def __init__(self, master):
-        self.master = master
-        master.title('Simple Python Calculator')
-        #master.iconbitmap('calculator.icon')
+    def __init__(self, cal):
+        self.cal = cal
+        cal.title('Simple Python Calculator')
+        #cal.iconbitmap(r'/home/net/MORYSO/PYTHON/Game-Dev/games-todo/16. Calculator/calculator.icon')
+        #cal.iconbitmap('calculator.icon')
         dark_grey = '#141414'
         med_grey = '#212121'
         cus_red = '#c41212'
-        self.screen = Text(master,background=dark_grey,font=('Helvetica',32),height=1,state='disabled',
-                foreground='white', bd=0, pady=50, padx=5,selectbackground=dark_grey,inactiveselectbackground=dark_grey)
+        self.screen = Text(cal, background=dark_grey, font=('Helvetica', 32), height=1, state='disabled',
+                           foreground='white', bd=0, pady=50, padx=5, selectbackground=dark_grey, inactiveselectbackground=dark_grey)
 
         for x in range(1,5):
-            self.master.columnconfigure(x, weight=1)
-            self.master.rowconfigure(x, weight=1)
+            self.cal.columnconfigure(x, weight=1)
+            self.cal.rowconfigure(x, weight=1)
 
         self.screen.grid(row=0, column=0, columnspan=5, sticky=W+E+N+S)
         self.screen.configure(state='normal')
         self.equation = ''
-        self.master.geometry('500x600') #Default size to open into
-        b1 =  self.createButton(7)
-        b2 = self.createButton(8)
-        b3 = self.createButton(9)
-        b4 = self.createButton(u"\u00F7", bg=med_grey)
-        b5 = self.createButton(4)
-        b6 = self.createButton(5)
-        b7 = self.createButton(6)
-        b8 = self.createButton(u"\u00D7", bg=med_grey)
-        b9 = self.createButton(1)
-        b10 = self.createButton(2)
-        b11 = self.createButton(3)
-        b12 = self.createButton('-', bg=med_grey)
-        b13 = self.createButton(',')
-        b14 = self.createButton(0)
-        b15 = self.createButton(None)
-        b16 = self.createButton('+', bg=med_grey)
-        b17 = self.createButton('DEL', None, bg=med_grey)
-        b18 = self.createButton('CE', None, bg=med_grey)
-        b19 = self.createButton('=', None, bg=cus_red)
-        b15.config(state='disabled')
-        buttons = [b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19]
+        self.cal.geometry('500x600') #Default size to open into
+        btn1 =  self.createButton(7)
+        btn2 = self.createButton(8)
+        btn3 = self.createButton(9)
+        btn4 = self.createButton(u"\u00F7", bg=med_grey)
+        btn5 = self.createButton(4)
+        btn6 = self.createButton(5)
+        btn7 = self.createButton(6)
+        btn8 = self.createButton(u"\u00D7", bg=med_grey)
+        btn9 = self.createButton(1)
+        btn10 = self.createButton(2)
+        btn11 = self.createButton(3)
+        btn12 = self.createButton('-', bg=med_grey)
+        btn13 = self.createButton(',')
+        btn14 = self.createButton(0)
+        btn15 = self.createButton(None)
+        btn16 = self.createButton('+', bg=med_grey)
+        btn17 = self.createButton('DEL', None, bg=med_grey)
+        btn18 = self.createButton('CLR', None, bg=med_grey)
+        btn19 = self.createButton('=', None, bg=cus_red)
+        btn15.config(state='disabled')
+        buttons = [btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14,btn15,btn16,btn17,btn18,btn19]
 
         count = 0
 
@@ -53,7 +56,7 @@ class Calculator:
         buttons[18].grid(row=4, column=4, rowspan=1, sticky=W+E+N+S)
 
     def createButton(self, val, write=True, width=5, bg='black'):
-        return Button(self.master, text=val, command=lambda:self.click(val,write), width=width, bg=bg, bd=0, fg='white',
+        return Button(self.cal, text=val, command=lambda:self.click(val, write), width=width, bg=bg, bd=0, fg='white',
                       font=('Helvetica',24))
 
     def click(self, text, write):
@@ -65,7 +68,7 @@ class Calculator:
                 answer = str(eval(self.equation))
                 self.clear_screen()
                 self.insert_screen(answer,newline=True)
-            elif text == "CE":
+            elif text == "CLR":
                 self.clear_screen()
             elif text == 'DEL':
                 self.del_screen()
